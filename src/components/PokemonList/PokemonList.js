@@ -17,7 +17,17 @@ function PokemonList({ searchTerm = "" }) {
     }, [url]);
 
     React.useEffect(() => {
-        
+        for (const pokemon of list) {
+            fetch(pokemon.url)
+                .then((response) => response.json())
+                .then((data) => {
+                    pokemon.picture = data.sprites.front_default;
+                    setList([...list]);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
     }, [list]);
 
     return (
@@ -27,7 +37,10 @@ function PokemonList({ searchTerm = "" }) {
                     return pokemon.name.includes(searchTerm);
                 })
                 .map((pokemon) => (
-                    <li key={pokemon.name}>{pokemon.name}</li>
+                    <li key={pokemon.name}>
+                        <img src={pokemon.picture} alt={pokemon.name} />
+                        {pokemon.name}
+                    </li>
             ))}
         </ul>
     );
