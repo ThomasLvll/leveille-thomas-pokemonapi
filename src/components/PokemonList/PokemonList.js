@@ -33,9 +33,7 @@ function PokemonList({ searchTerm = "" }) {
     return (
         <ul>
             {list
-                .filter((pokemon) => {
-                    return pokemon.name.includes(searchTerm);
-                })
+                .filter((pokemon) => pokemon.name.includes(searchTerm))
                 .map((pokemon) => (
                     <li key={pokemon.name}>
                         <img src={pokemon.picture} alt={pokemon.name} />
